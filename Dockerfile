@@ -4,4 +4,4 @@ COPY . .
 RUN npm install --legacy-peer-deps
 RUN npm run build
 EXPOSE 3000
-CMD ["node", "dist/server/index.js"]
+CMD ["node", ".output/server/index.mjs"]

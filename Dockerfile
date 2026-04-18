@@ -1,15 +1,18 @@
-FROM node:18-alpine
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+COPY package*.json ./
+RUN npm install
+
 COPY . .
+RUN npm run build
 
-RUN npm install --legacy-peer-deps
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-RUN npm run build || echo "correção botão entrar"
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-RUN npm install -g serve
+EXPOSE 80
 
-EXPOSE 3000
-
-CMD ["serve", "-s", "dist", "-l", "3000"]
+CMD ["nginx", "-g", "daemon off;"]

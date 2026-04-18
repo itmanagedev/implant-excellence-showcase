@@ -3,24 +3,30 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Install deps first (better cache)
-COPY package.json package-lock.json* bun.lockb* ./
+# Install dependencies (better cache)
+COPY package.json package-lock.json* ./
 RUN npm install --legacy-peer-deps
 
-# Copy source and build
+# Copy source and build (TanStack Start → Cloudflare Worker bundle in dist/)
 COPY . .
 RUN npm run build
 
-# ---------- Stage 2: Serve with Nginx ----------
-FROM nginx:alpine AS runner
+# ---------- Stage 2: Runtime ----------
+FROM node:20-alpine AS runner
 
-# SPA-friendly nginx config (history fallback + gzip + cache)
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+WORKDIR /app
 
-# TanStack Start (Cloudflare preset) emits the client bundle to dist/client
-# Fallback to dist if a different preset is used.
-COPY --from=builder /app/dist/client /usr/share/nginx/html
+ENV NODE_ENV=production
 
-EXPOSE 80
+# Bring built artifacts and the minimal files needed by wrangler
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/wrangler.jsonc ./wrangler.jsonc
+COPY --from=builder /app/package.json ./package.json
 
-CMD ["nginx", "-g", "daemon off;"]
+# Install only wrangler (runs the worker bundle locally on workerd)
+RUN npm install --no-save wrangler@latest
+
+EXPOSE 3000
+
+# Serve the built worker on 0.0.0.0:3000 so EasyPanel can route to it
+CMD ["npx", "wrangler", "dev", "--ip", "0.0.0.0", "--port", "3000", "--local", "--config", "wrangler.jsonc"]

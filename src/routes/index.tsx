@@ -342,19 +342,22 @@ function Process() {
 function Testimonials() {
   const items = [
     {
-      q: "Eu havia perdido a confiança em sorrir. Hoje, voltei a me reconhecer no espelho. O Dr. Wirlon devolveu muito mais do que dentes.",
-      a: "Marina C.",
-      r: "Reabilitação oral completa",
+      name: "Marina C.",
+      treatment: "Reabilitação oral completa",
+      poster: smile,
+      videoUrl: "",
     },
     {
-      q: "Profissionalismo absoluto. O planejamento foi tão detalhado que eu já sabia exatamente como ficaria meu sorriso antes da cirurgia.",
-      a: "Ricardo A.",
-      r: "Implantes superiores · Carga imediata",
+      name: "Ricardo A.",
+      treatment: "Implantes · Carga imediata",
+      poster: clinic,
+      videoUrl: "",
     },
     {
-      q: "Cuidado humano que se sente em cada visita. A clínica é um refúgio e o trabalho do Dr. João é simplesmente arte.",
-      a: "Helena V.",
-      r: "Próteses sobre implante",
+      name: "Helena V.",
+      treatment: "Próteses sobre implante",
+      poster: implant,
+      videoUrl: "",
     },
   ];
   return (
@@ -363,32 +366,80 @@ function Testimonials() {
         <div className="text-center max-w-2xl mx-auto mb-16">
           <div className="flex items-center justify-center gap-3 mb-6">
             <span className="gold-divider" />
-            <span className="eyebrow">Histórias de quem voltou a sorrir</span>
+            <span className="eyebrow">O que os nossos pacientes dizem</span>
             <span className="gold-divider" />
           </div>
           <h2 className="font-display text-4xl md:text-5xl text-primary">
-            Confiança construída sorriso a sorriso.
+            Histórias reais de quem voltou a sorrir.
           </h2>
+          <p className="mt-6 text-muted-foreground leading-relaxed">
+            Ouça, na voz dos nossos pacientes, como foi a experiência de
+            transformar o sorriso com o Dr. João Wirlon.
+          </p>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
           {items.map((t) => (
-            <figure
-              key={t.a}
-              className="bg-background border border-border p-8 md:p-10 flex flex-col"
-            >
-              <div className="text-gold font-display text-5xl leading-none">“</div>
-              <blockquote className="mt-2 font-display text-xl text-primary leading-snug italic">
-                {t.q}
-              </blockquote>
-              <figcaption className="mt-8 pt-6 border-t border-border">
-                <div className="text-sm font-medium text-primary">{t.a}</div>
-                <div className="text-xs text-muted-foreground mt-1">{t.r}</div>
-              </figcaption>
-            </figure>
+            <VideoTestimonial key={t.name} {...t} />
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function VideoTestimonial({
+  name,
+  treatment,
+  poster,
+  videoUrl,
+}: {
+  name: string;
+  treatment: string;
+  poster: string;
+  videoUrl: string;
+}) {
+  return (
+    <figure className="bg-background border border-border overflow-hidden flex flex-col group">
+      <div className="relative aspect-[4/5] overflow-hidden bg-primary">
+        {videoUrl ? (
+          <video
+            src={videoUrl}
+            poster={poster}
+            controls
+            preload="none"
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <>
+            <img
+              src={poster}
+              alt={`Depoimento de ${name}`}
+              loading="lazy"
+              className="w-full h-full object-cover opacity-70 group-hover:opacity-90 transition-opacity"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full border border-gold flex items-center justify-center bg-primary/40 backdrop-blur-sm group-hover:bg-gold group-hover:text-primary transition-colors">
+                <svg
+                  viewBox="0 0 24 24"
+                  className="w-6 h-6 text-gold group-hover:text-primary translate-x-0.5"
+                  fill="currentColor"
+                >
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+            </div>
+            <div className="absolute bottom-4 left-4 right-4 text-[0.65rem] tracking-[0.25em] uppercase text-gold/90">
+              Vídeo em breve
+            </div>
+          </>
+        )}
+      </div>
+      <figcaption className="p-6 border-t border-border">
+        <div className="text-sm font-medium text-primary">{name}</div>
+        <div className="text-xs text-muted-foreground mt-1">{treatment}</div>
+      </figcaption>
+    </figure>
   );
 }
 
@@ -417,7 +468,7 @@ function CTA() {
             Agendar avaliação <ArrowRight className="w-4 h-4" />
           </Link>
           <a
-            href="https://wa.me/5511300000000"
+            href="https://wa.me/5585940790069"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center justify-between gap-3 border border-primary-foreground/30 px-8 py-5 text-sm tracking-[0.2em] uppercase hover:border-gold hover:text-gold transition-colors"

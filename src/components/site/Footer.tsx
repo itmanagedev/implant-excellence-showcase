@@ -57,24 +57,27 @@ export function Footer() {
           <ul className="space-y-3 text-sm text-primary-foreground/80">
             <li className="flex items-start gap-3">
               <MapPin className="w-4 h-4 mt-0.5 text-gold shrink-0" />
-              <span>Av. Paulista, 1842 — Sala 1208, São Paulo</span>
+              <span>
+                Rua Monsenhor Salazar, 173<br />
+                São João do Tauape, Fortaleza — CE
+              </span>
             </li>
             <li className="flex items-center gap-3">
               <Phone className="w-4 h-4 text-gold" />
-              <a href="tel:+551130000000" className="hover:text-gold">
-                +55 (11) 3000-0000
+              <a href="https://wa.me/5585940790069" target="_blank" rel="noreferrer" className="hover:text-gold">
+                +55 (85) 9407-9069
               </a>
             </li>
             <li className="flex items-center gap-3">
               <Mail className="w-4 h-4 text-gold" />
-              <a href="mailto:contato@wirlon.com.br" className="hover:text-gold">
-                contato@wirlon.com.br
+              <a href="mailto:contato@drjoaowirlon.com.br" className="hover:text-gold">
+                contato@drjoaowirlon.com.br
               </a>
             </li>
             <li className="flex items-center gap-3">
               <Instagram className="w-4 h-4 text-gold" />
-              <a href="#" className="hover:text-gold">
-                @wirlon.odontologia
+              <a href="https://instagram.com/dr.joaowirlon" target="_blank" rel="noreferrer" className="hover:text-gold">
+                @dr.joaowirlon
               </a>
             </li>
           </ul>

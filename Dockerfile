@@ -29,4 +29,4 @@ RUN npm install --no-save wrangler@latest
 EXPOSE 3000
 
 # Serve the built worker on 0.0.0.0:3000 so EasyPanel can route to it
-CMD ["npx", "wrangler", "dev", "--ip", "0.0.0.0", "--port", "3000", "--local", "--config", "wrangler.jsonc"]
+CMD ["npx", "wrangler", "dev", "--ip", "0.0.0.0", "--port", "3000", "--config", "wrangler.jsonc"]

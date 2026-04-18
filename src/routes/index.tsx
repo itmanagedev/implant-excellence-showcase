@@ -417,7 +417,7 @@ function CTA() {
             Agendar avaliação <ArrowRight className="w-4 h-4" />
           </Link>
           <a
-            href="https://wa.me/5511300000000"
+            href="https://wa.me/5585940790069"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center justify-between gap-3 border border-primary-foreground/30 px-8 py-5 text-sm tracking-[0.2em] uppercase hover:border-gold hover:text-gold transition-colors"

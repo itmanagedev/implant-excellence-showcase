@@ -47,17 +47,20 @@ function ContatoPage() {
           <Info
             icon={MapPin}
             title="Endereço"
-            lines={["Av. Paulista, 1842 — Sala 1208", "Bela Vista, São Paulo — SP"]}
+            lines={[
+              "Rua Monsenhor Salazar, 173",
+              "São João do Tauape, Fortaleza — CE",
+            ]}
           />
           <Info
             icon={Phone}
-            title="Telefone"
-            lines={["+55 (11) 3000-0000", "WhatsApp: +55 (11) 90000-0000"]}
+            title="WhatsApp & Telefone"
+            lines={["+55 (85) 9407-9069"]}
           />
           <Info
             icon={Mail}
             title="E-mail"
-            lines={["contato@wirlon.com.br", "agendamento@wirlon.com.br"]}
+            lines={["contato@drjoaowirlon.com.br"]}
           />
           <Info
             icon={Clock}

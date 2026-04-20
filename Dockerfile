@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm install --legacy-peer-deps
 
-# Copy source and build (TanStack Start → Cloudflare Worker bundle in dist/)
+# Copy source and build (TanStack Start → Node server bundle in .output/)
 COPY . .
 RUN npm run build
 
@@ -17,16 +17,14 @@ FROM node:20-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
+ENV HOST=0.0.0.0
+ENV PORT=3000
 
-# Bring built artifacts and the minimal files needed by wrangler
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/wrangler.jsonc ./wrangler.jsonc
+# Copy the built Node server output
+COPY --from=builder /app/.output ./.output
 COPY --from=builder /app/package.json ./package.json
-
-# Install only wrangler (runs the worker bundle locally on workerd)
-RUN npm install --no-save wrangler@latest
 
 EXPOSE 3000
 
-# Serve the built worker on 0.0.0.0:3000 so EasyPanel can route to it
-CMD ["npx", "wrangler", "dev", "--ip", "0.0.0.0", "--port", "3000", "--config", "wrangler.jsonc"]
+# Run the TanStack Start Node server
+CMD ["node", ".output/server/index.mjs"]

@@ -20,9 +20,13 @@ ENV NODE_ENV=production
 ENV HOST=0.0.0.0
 ENV PORT=3000
 
+# Install only runtime dependencies required by the SSR bundle
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/package-lock.json ./package-lock.json
+RUN npm install --omit=dev --legacy-peer-deps && npm cache clean --force
+
 # Copy the built Node server output
 COPY --from=builder /app/.output ./.output
-COPY --from=builder /app/package.json ./package.json
 
 EXPOSE 3000
 
